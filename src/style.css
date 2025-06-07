@@ -2183,3 +2183,5 @@ input::placeholder {
         /* height: calc(100% * (416 / 440)); */
     }
 }
+
+.p-4{padding: 1rem}
