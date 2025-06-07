@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         li.innerHTML = `
           <div class="flex flex-col bg-white overflow-hidden">
-            <img src="${blog.img}" alt="${blog.title}" class="w-full h-auto object-cover">
+            <div class="blog-card-image-wrapper"><img src="${blog.img}" alt="${blog.title}"></div>
             <div class="p-[1.5rem]">
               <time class="block mb-[0.5rem] text-[1rem]">${blog.publishDate}</time>
               <div class="mb-[0.5rem] text-[1.125rem] font-bold text-[#0027D5] leading-snug">

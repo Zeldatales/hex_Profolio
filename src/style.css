@@ -2185,3 +2185,14 @@ input::placeholder {
 }
 
 .p-4{padding: 1rem}
+
+.blog-card-image-wrapper {
+  aspect-ratio: 3 / 2;
+  background-color: #f3f3f3;
+  overflow: hidden;
+}
+.blog-card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
