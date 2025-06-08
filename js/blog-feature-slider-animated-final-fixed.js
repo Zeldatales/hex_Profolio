@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ${blog.tag.map(tag => `<a href="#" class="mr-[0.5rem]">#${tag}</a>`).join('')}
                 ${blog.label ? `<span class="inline-block bg-[#0027D5] text-white text-[0.875rem] px-2 py-0.5 ml-2">${blog.label}</span>` : ''}
               </div>
-              <h3 class="text-[1.75rem] font-[700] mb-[0.5rem]">${blog.title}</h3>
+              <h3 class="text-[1.75rem] font-[700] mb-[0.5rem] line-clamp-2 overflow-hidden">${blog.title}</h3>
               <p class="text-[1.25rem] text-[#4B4B4B] leading-[1.6] line-clamp-2 overflow-hidden">${blog.intro}</p>
               <div class="mt-[1rem]">
                 <a href="blogContent.html" class="inline-block border border-black px-[1rem] py-[0.5rem] rounded-full text-[1rem] button-hover hover:text-white transition">閱讀全文</a>
