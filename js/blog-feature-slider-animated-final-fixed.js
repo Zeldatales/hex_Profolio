@@ -74,6 +74,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       });
 
+      // 防護檢查：確保wrapper寬度不超過視窗
+      const totalWidth = itemsPerView * (wrapper.offsetWidth / itemsPerView);
+      wrapper.style.maxWidth = `${Math.min(totalWidth, window.innerWidth)}px`;
       updateButtons();
     }
 
@@ -81,6 +84,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (currentIndex > 0) {
         currentIndex--;
         renderCards('left');
+        // 動態更新clip範圍
+        document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
       }
     });
 
@@ -88,6 +93,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (currentIndex < data.length - itemsPerView) {
         currentIndex++;
         renderCards('right');
+        // 動態更新clip範圍
+        document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
       }
     });
 
@@ -98,11 +105,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentIndex = Math.min(currentIndex, Math.max(0, data.length - itemsPerView));
         renderCards();
       }
-      // 新增 resize 時更新 clip 範圍
+      // 即時更新clip範圍
       document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
     });
 
-    // 修改部分：使用 clip 代替 overflowX
+    // 初始化：啟用clip與position
     document.body.style.position = 'relative';
     document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
 
