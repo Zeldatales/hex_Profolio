@@ -4,8 +4,6 @@ body {
   font-family: 'Noto Sans TC', sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
-
 *, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
