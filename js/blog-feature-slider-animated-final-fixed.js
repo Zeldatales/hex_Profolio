@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const wrapper = document.getElementById('card-area');
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         btn.classList.toggle('border-[#A0B4FF]', disabled);
         btn.classList.toggle('text-white', !disabled);
         btn.classList.toggle('text-gray-400', disabled);
-        btn.classList.toggle('bg-primary', true); // always white background
+        btn.classList.toggle('bg-primary', true);
       };
 
       toggleBtnStyle(prevBtn, isPrevDisabled);
@@ -99,10 +98,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentIndex = Math.min(currentIndex, Math.max(0, data.length - itemsPerView));
         renderCards();
       }
+      // 新增 resize 時更新 clip 範圍
+      document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
     });
 
-    // 防止動畫過程出現 X 軸卷軸
-    document.body.style.overflowX = 'hidden';
+    // 修改部分：使用 clip 代替 overflowX
+    document.body.style.position = 'relative';
+    document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
 
     renderCards();
 
