@@ -2242,8 +2242,8 @@ img, video, iframe {
 @media (max-width: 767px) {
   .container,
   .topic-list {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: 6px !important;
+    padding-right: 10px !important;
     box-sizing: border-box;
   }
   .column,
@@ -2251,5 +2251,5 @@ img, video, iframe {
     padding-left: 8px !important;
     padding-right: 8px !important;
     box-sizing: border-box;
-  }
+  }  
 }
