@@ -2243,7 +2243,7 @@ img, video, iframe {
   .container,
   .topic-list {
     padding-left: 6px !important;
-    padding-right: 16px !important;
+    padding-right: 20px !important;
     box-sizing: border-box;
   }
   .column,
