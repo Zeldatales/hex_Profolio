@@ -2238,3 +2238,18 @@ img, video, iframe {
     padding-right: 8px !important;
     box-sizing: border-box;
   }
+
+@media (max-width: 767px) {
+  .container,
+  .topic-list {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box;
+  }
+  .column,
+  .about-column {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    box-sizing: border-box;
+  }
+}
