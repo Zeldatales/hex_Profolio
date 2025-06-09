@@ -18,13 +18,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     let currentIndex = 0;
     let itemsPerView = window.innerWidth >= 1296 ? 3 : 1;
 
+    // 新增：動態clip更新函數
+    const updateClip = () => {
+      requestAnimationFrame(() => {
+        document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
+      });
+    };
+
     function updateButtons() {
       const maxIndex = Math.max(0, data.length - itemsPerView);
-      const isPrevDisabled = currentIndex === 0;
-      const isNextDisabled = currentIndex >= maxIndex;
-
-      prevBtn.disabled = isPrevDisabled;
-      nextBtn.disabled = isNextDisabled;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
 
       const toggleBtnStyle = (btn, disabled) => {
         btn.classList.toggle('border-[#0027D5]', !disabled);
@@ -34,21 +38,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         btn.classList.toggle('bg-primary', true);
       };
 
-      toggleBtnStyle(prevBtn, isPrevDisabled);
-      toggleBtnStyle(nextBtn, isNextDisabled);
+      toggleBtnStyle(prevBtn, prevBtn.disabled);
+      toggleBtnStyle(nextBtn, nextBtn.disabled);
     }
 
     function renderCards(direction = 'right') {
       wrapper.innerHTML = '';
       const visibleCards = data.slice(currentIndex, currentIndex + itemsPerView);
 
-      visibleCards.forEach((blog, index) => {
+      visibleCards.forEach((blog) => {
         const li = document.createElement('li');
-        li.className = 'min-w-full xl:min-w-[33.3333%] box-border pr-[0.5rem] opacity-0 transition-all duration-500 ease-in-out';
-        li.classList.add(direction === 'right' ? 'translate-x-[30px]' : '-translate-x-[30px]');
+        li.className = `min-w-full xl:min-w-[33.3333%] box-border pr-[0.5rem] opacity-0 transition-all duration-500 ease-in-out ${
+          direction === 'right' ? 'translate-x-[30px]' : '-translate-x-[30px]'
+        }`;
 
         li.innerHTML = `
-          <div class="flex flex-col bg-white overflow-hidden">
+          <div class="flex flex-col bg-white overflow-hidden" style="min-width: calc(100%/${itemsPerView} - 0.5rem)">
             <div class="blog-card-image-wrapper"><img src="${blog.img}" alt="${blog.title}"></div>
             <div class="p-[1.5rem]">
               <time class="block mb-[0.5rem] text-[1rem]">${blog.publishDate}</time>
@@ -64,55 +69,56 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
           </div>
         `;
+
         wrapper.appendChild(li);
 
         requestAnimationFrame(() => {
-          li.classList.remove('opacity-0');
-          li.classList.remove('translate-x-[30px]');
-          li.classList.remove('-translate-x-[30px]');
-          li.classList.add('opacity-100', 'translate-x-0');
+          li.style.transform = 'translateX(0)';
+          li.style.opacity = '1';
         });
       });
 
-      // 防護檢查：確保wrapper寬度不超過視窗
-      const totalWidth = itemsPerView * (wrapper.offsetWidth / itemsPerView);
-      wrapper.style.maxWidth = `${Math.min(totalWidth, window.innerWidth)}px`;
+      // 強化防護機制
+      wrapper.style.flexBasis = `calc(100%/${itemsPerView} - 0.5rem)`;
+      wrapper.style.maxWidth = '100%';
       updateButtons();
+      updateClip(); // 同步更新裁剪範圍
     }
 
-    prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderCards('left');
-        // 動態更新clip範圍
-        document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
+    // 按鈕事件處理（新增雙重防護）
+    const handleButtonClick = (direction) => {
+      const oldIndex = currentIndex;
+      currentIndex = direction === 'prev' ? Math.max(0, currentIndex -1) : Math.min(data.length - itemsPerView, currentIndex +1);
+      
+      if (currentIndex !== oldIndex) {
+        renderCards(direction === 'prev' ? 'left' : 'right');
+        updateClip();
+        // 強制佈局同步
+        void wrapper.offsetHeight;
       }
-    });
+    };
 
-    nextBtn.addEventListener('click', () => {
-      if (currentIndex < data.length - itemsPerView) {
-        currentIndex++;
-        renderCards('right');
-        // 動態更新clip範圍
-        document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
-      }
-    });
+    prevBtn.addEventListener('click', () => handleButtonClick('prev'));
+    nextBtn.addEventListener('click', () => handleButtonClick('next'));
 
+    // 強化resize處理
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      const newItemsPerView = window.innerWidth >= 1296 ? 3 : 1;
-      if (newItemsPerView !== itemsPerView) {
-        itemsPerView = newItemsPerView;
-        currentIndex = Math.min(currentIndex, Math.max(0, data.length - itemsPerView));
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const newItemsPerView = window.innerWidth >= 1296 ? 3 : 1;
+        if (newItemsPerView !== itemsPerView) {
+          itemsPerView = newItemsPerView;
+          currentIndex = Math.min(currentIndex, Math.max(0, data.length - itemsPerView));
+        }
         renderCards();
-      }
-      // 即時更新clip範圍
-      document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
+        updateClip();
+      }, 100); // 增加防抖動延遲
     });
 
-    // 初始化：啟用clip與position
+    // 初始化設定
     document.body.style.position = 'relative';
-    document.body.style.clip = `rect(0 ${window.innerWidth}px ${window.innerHeight}px 0)`;
-
+    updateClip();
     renderCards();
 
   } catch (err) {
