@@ -269,5 +269,26 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/aos.js"></script>
     <script>AOS.init({ once: true });</script>
+<script>
+const searchInput = document.querySelector('.searchbar');
+const cards = document.querySelectorAll('.card');
+
+searchInput.addEventListener('input', function() {
+  const keyword = this.value.trim().toLowerCase();
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    if (text.includes(keyword)) {
+      card.parentElement.style.display = '';
+    } else {
+      card.parentElement.style.display = 'none';
+    }
+  });
+});
+
+// 防止搜尋表單送出刷新頁面
+searchInput.form.addEventListener('submit', function(e) {
+  e.preventDefault();
+});
+</script>
 </body>
 </html>
