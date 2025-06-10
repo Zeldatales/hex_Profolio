@@ -397,7 +397,12 @@ input[type="search"]::-webkit-search-results-decoration {
       outline: 2px solid #0027D5;
       outline-offset: 2px;
     }
-
+    .ctb-button:disabled {
+      background-color: #e6f0fa; /* 淡藍色，冷色調 */
+      color: #b0b8c9;            /* 可選：讓箭頭或icon也變淡藍灰 */
+      cursor: not-allowed;         /* 顯示不可點擊狀態 */
+       box-shadow: none;           /* 視覺上更像停用 */
+    }
 
 
 /*
