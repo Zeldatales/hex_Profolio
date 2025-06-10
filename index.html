@@ -28,14 +28,18 @@
 </ul>
 </header>
 <!-- 大圖看板 -->
-<section class="flex flex-col justify-center items-center w-full xl:flex-row" data-aos="fade-up">
-<img alt="人物介紹照片" class="max-w-full w-full object-cover xl:w-[50%]" data-aos="zoom-in" src="./img/desktop/index/Hero Section.png" style="; z-index: 1; position: relative;"/>
-<div class="max-w-full w-full flex-shrink-0 flex flex-col justify-center text-center p-[1.5rem] mb-[120px] text-[#0027D5] xl:w-[50%] xl:p-[5rem] xl:text-left">
-<h1 class="text-[3.25rem] xl:text-[5rem] 2xl:text-[7.5rem] font-[900]">
-          Alyse Wang
-        </h1>
-<p class="text-[1.5rem] sm:text-[1.75rem] font-[700]">前端工程師 &amp; 職涯諮詢師</p>
-</div>
+<section class="relative flex flex-col justify-center items-center w-full xl:flex-row aos-init aos-animate" data-aos="fade-up">
+  <img alt="人物介紹照片" class="max-w-full w-full object-cover xl:w-[50%] aos-init aos-animate" data-aos="zoom-in" src="./img/desktop/index/Hero Section.png" style="z-index: 1; position: relative;">
+  
+  <div class="relative w-full xl:w-[50%]">
+    <img alt="人物介紹照片2" class="max-w-full w-full object-cover aos-init aos-animate" data-aos="zoom-in" src="./img/desktop/index/HeroSection2.png" style="z-index: 1; position: relative;">
+    <div class="absolute inset-0 flex flex-col justify-center text-center p-[1.5rem] mb-[120px] text-[#0027D5] xl:p-[5rem] xl:text-left" style="z-index: 2;">
+      <h1 class="text-[3.25rem] xl:text-[5rem] 2xl:text-[7.5rem] font-[900]">
+        Alyse Wang
+      </h1>
+      <p class="text-[1.5rem] sm:text-[1.75rem] font-[700]">前端工程師 &amp; 職涯諮詢師</p>
+    </div>
+  </div>
 </section>
 <section class="flex justify-end" data-aos="fade-up">
 <div class="max-w-[997px] w-full px-[1.5rem] mt-[-120px] py-[2.5rem] mx-[0.75rem] bg-[white] z-10 text-[1.5rem] xl:text-[1.75rem] xl:px-[2.5rem] xl:mt-[-120px] xl:py-[5rem] xl:mr-[5rem]">
